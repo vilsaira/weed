@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
 use Irssi;
 use strict;
 use IO::Handle; # for (auto)flush
@@ -483,8 +482,8 @@ sub check_modes {
 sub get_flags {
 	my ($chatnet, $channel, $nick, $address) = @_;
 	my $flags;
-	no strict 'refs';
-	if (defined %{ 'Irssi::Script::people::' }) {
+	no strict 'refs';  
+	if (%{ 'Irssi::Script::people::' }) {
 		if (defined ($channel)) {
 			$flags = (&{ 'Irssi::Script::people::find_local_flags' }($chatnet,$channel,$nick,$address));
 		} else {
@@ -493,7 +492,7 @@ sub get_flags {
 		$flags = join('',keys(%{$flags}));
 	} else {
 		my $shasta;
-		if (defined %{ 'Irssi::Script::friends_shasta::' }) {
+		if (%{ 'Irssi::Script::friends_shasta::' }) {
 			$shasta = 'friends_shasta';
 		} elsif (defined &{ 'Irssi::Script::friends::get_idx' }) {
 			$shasta = 'friends';
@@ -516,7 +515,7 @@ sub get_flags {
 sub is_friend {
 	my ($chatnet, $channel, $nick, $address) = @_;
 	no strict 'refs';
-	if (defined %{ 'Irssi::Script::people::' }) {
+	if (%{ 'Irssi::Script::people::' }) {
 		return (() != &{'Irssi::Script::people::find_users'}($chatnet, $nick, $address));
 		my $flags;
 		if (defined ($channel)) {
@@ -527,7 +526,7 @@ sub is_friend {
 		return ($flags ne ''); # TODO: test this
 	} else {
 		my $shasta;
-		if (defined %{ 'Irssi::Script::friends_shasta::' }) {
+		if (%{ 'Irssi::Script::friends_shasta::' }) {
 			$shasta = 'friends_shasta';
 		} elsif (defined &{ 'Irssi::Script::friends::get_idx' }) {
 			$shasta = 'friends';
